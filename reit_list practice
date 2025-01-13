@@ -1,0 +1,32 @@
+#created on 1-9-25. Read reit_list excel file practice
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+df = pd.read_excel(r'C:\Users\WEN\OneDrive\Documents\Kaggle Data Folder\reit_list.xlsx')
+df.info()
+#now let's get a quick visualization of the dataframe
+df.plot()
+plt.show()
+
+#now let's create a new df with all numeric columns
+df2=df = pd.read_excel(r'C:\Users\WEN\OneDrive\Documents\Kaggle Data Folder\reit_list.xlsx',usecols=[0,1,3,4,10,11])
+df2.info()
+df2.plot(x='Ticker')#here I set ticker as the x axis, and the rest of the columns are y axis.
+df3=df2.select_dtypes(exclude='object')
+print('Here is what df3.info() looks like:\n',df3.info())
+#now let's try to get a statistic view of the dataframe df3
+df3.agg(['mean','max','min']) #this line is the same as df3.describe()
+#now let plot using df3 and selected columns
+xticks = np.arange(5, 220, 20) 
+yticks = np.arange(5,220,20) 
+
+df3.plot('Price','Dividend Yield', kind='line')
+
+fig, axes=plt.subplots()
+#here set y axis ticks
+#axes.set_yticks(np.arange(0, 200, 100/10), minor=True) #add ticks to the y axis
+#here set x axis ticks
+ticker = df['Ticker'].to_list()
+#axes.set_xticks(np.arange(0, 200, 100/10), minor=True) #add ticks to the x axis
+axes.plot(xticks,yticks)
+plt.show()
